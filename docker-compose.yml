@@ -10,14 +10,22 @@ services:
     environment:
       - APP_PORT=3001
       - DB_USER=root
-      - DB_PASS=MYSQL_ROOT_PASSWORD
+      - DB_PASS=zaxscdv98
+      - DB_NAME=measuresdb
       - DB_HOST=db
       - DB_PORT=3306
+    networks:
+      - backend-network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
-    command: npm run dev
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
+      timeout: 2s
+      retries: 5
+    command: npm run start
 
   db:
     image: mysql:8.0.32
@@ -25,10 +33,23 @@ services:
     ports:
       - 3360:3306
     environment:
-      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+      MYSQL_ROOT_PASSWORD: zaxscdv98
+      MYSQL_DATABASE: measuresdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: zaxscdv98
     volumes:
       - mysql_data:/var/lib/mysql
     restart: 'always'
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
+      timeout: 2s
+      retries: 5
 
 volumes:
   mysql_data:
+
+networks:
+  backend-network:
+    driver: bridge

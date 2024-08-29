@@ -5,8 +5,11 @@
   "main": "./build/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node-dev src/server.ts",
-    "start": "node dist/index.js",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli",
+    "build": "tsc --project tsconfig.json",
+    "dev": "tsnd --watch \"./src/**\" --transpile-only ./src/server.ts",
+    "prestart": "npm run build && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+    "start": "node .build/server.js",
     "compose:up": "docker-compose up --build",
     "compose:down": "docker-compose down"
   },
@@ -15,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
+    "joi": "^17.13.3",
     "mysql2": "^3.11.0",
     "sequelize": "^6.37.3"
   },
