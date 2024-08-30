@@ -9,6 +9,9 @@ function mapStatusHTTP(status, error_code) {
                 case 'MEASURES_NOT_FOUND': return 404;
                 case 'MEASURE_NOT_FOUND': return 404;
                 case 'CONFIRMATION_DUPLICATE': return 409;
+                case 'DOUBLE_REPORT': return 409;
+                case 'INVALID_DATA': return 400;
+                case 'INVALID_TYPE': return 400;
                 // Outros casos de erro
                 default: return 500;
             }

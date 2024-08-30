@@ -6,6 +6,7 @@ import IUpload from "../interfaces/IUpload";
 import GeminiClient from "../utils/geminiClient";
 import IMeasureResponse from "../interfaces/Measure/IMeasureResponse";
 import IList from "../interfaces/IList";
+import TemporaryUrlHandler from "../utils/handleTemporaryUrl";
 
 export default class MeasureService {
   constructor(
@@ -47,6 +48,8 @@ export default class MeasureService {
     }
     const newUuid = uuidv4();
     const getMeasure = await this.geminiClient.analyzeImage(measure.image, 'image/png');
+    const urlHandler = new TemporaryUrlHandler();
+    const imageUrl = await urlHandler.createTemporaryUrl(measure.image, newUuid);
 
     const newMeasure = await this.measureModel.create({
       measureUuid: newUuid,
@@ -54,13 +57,13 @@ export default class MeasureService {
       measureType: measure.measure_type,
       measureValue: Number(getMeasure),
       hasConfirmed: false,
-      imageUrl: 'fantasyurl',
+      imageUrl: imageUrl,
       customerCode: measure.customer_code,
     });
 
     if (newMeasure) {
       return { data: {
-        image_url: 'fantasyurl',
+        image_url: imageUrl,
         measure_value: Number(getMeasure),
         measure_uuid: newUuid,
       }, status: 'SUCCESSFUL' };

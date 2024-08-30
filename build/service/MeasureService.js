@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const MeasureModel_1 = __importDefault(require("../models/MeasureModel"));
 const uuid_1 = require("uuid");
 const geminiClient_1 = __importDefault(require("../utils/geminiClient"));
+const handleTemporaryUrl_1 = __importDefault(require("../utils/handleTemporaryUrl"));
 class MeasureService {
     constructor(measureModel = new MeasureModel_1.default(), geminiClient = new geminiClient_1.default()) {
         this.measureModel = measureModel;
@@ -55,18 +56,20 @@ class MeasureService {
             }
             const newUuid = (0, uuid_1.v4)();
             const getMeasure = yield this.geminiClient.analyzeImage(measure.image, 'image/png');
+            const urlHandler = new handleTemporaryUrl_1.default();
+            const imageUrl = yield urlHandler.createTemporaryUrl(measure.image, newUuid);
             const newMeasure = yield this.measureModel.create({
                 measureUuid: newUuid,
                 measureDatetime: measure.measure_datetime,
                 measureType: measure.measure_type,
                 measureValue: Number(getMeasure),
                 hasConfirmed: false,
-                imageUrl: 'fantasyurl',
+                imageUrl: imageUrl,
                 customerCode: measure.customer_code,
             });
             if (newMeasure) {
                 return { data: {
-                        image_url: 'fantasyurl',
+                        image_url: imageUrl,
                         measure_value: Number(getMeasure),
                         measure_uuid: newUuid,
                     }, status: 'SUCCESSFUL' };
