@@ -1,5 +1,5 @@
 type Base64 = string;
-type DateTime = string;
+type DateTime = Date;
 
 export default interface IUpload {
   image: Base64;

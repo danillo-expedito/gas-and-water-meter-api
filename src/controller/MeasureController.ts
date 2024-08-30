@@ -4,6 +4,7 @@ import MeasureService from '../service/MeasureService';
 import IConfirm from '../interfaces/IConfirm';
 import IHandleResponse from '../interfaces/IHandleResponse';
 import IList from '../interfaces/IList';
+import IUpload from '../interfaces/IUpload';
 
 
 export default class MeasureController {
@@ -14,6 +15,7 @@ export default class MeasureController {
 
   public async listMeasures(req: Request, res: Response): Promise<Response> {
     const { measure_type } = req.query;
+    const { customer_code } = req.params;
     const response = await this.measureService.findAll(customer_code, measure_type as 'WATER' | 'GAS');
     
     return this.handleResponse<IList>(res, response);
@@ -29,8 +31,9 @@ export default class MeasureController {
 
 
   public async create(req: Request, res: Response): Promise<Response> {
-    // ADD NEW LOGIC IN THE MODEL AND SERVICE USING THE GEMINI API
-    const response = await this.measureService.create();
+    const measure: IUpload = req.body;
+    const response = await this.measureService.create(measure);
+
     return this.handleResponse(res, response);
   }
 
@@ -45,7 +48,7 @@ export default class MeasureController {
 
   private handleResponse<T>(res: Response, response: IHandleResponse<T>): Response {
     if (response.status === 'SUCCESSFUL') {
-      return res.status(mapStatusHTTP(response.status)).json(response);
+      return res.status(mapStatusHTTP(response.status)).json(response.data);
     }
 
     return res.status(mapStatusHTTP('ERROR', response.error_code)).json({

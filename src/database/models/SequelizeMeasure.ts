@@ -7,49 +7,50 @@ import {
 import db from '.'
 
 class Measure extends Model<InferAttributes<Measure>, InferCreationAttributes<Measure>> {
-  declare measure_uuid: string;
+  declare measureUuid: string;
 
-  declare measure_datetime: string;
+  declare measureDatetime: Date;
 
-  declare measure_type: string;
+  declare measureType: string;
 
-  declare measure_value: number;
+  declare measureValue: number;
 
-  declare has_confirmed: boolean;
+  declare hasConfirmed: boolean;
 
-  declare image_url: string;
+  declare imageUrl: string;
 
-  declare customer_code: string;
+  declare customerCode: string;
 }
 
 Measure.init({
-  measure_uuid: {
+  measureUuid: {
     type: DataTypes.UUID,
     allowNull: false,   
-    primaryKey: true
+    primaryKey: true,
   },
-  measure_datetime: {
-    type: DataTypes.DATE
+  measureDatetime: {
+    type: DataTypes.DATE,
   },
-  measure_type: {
-    type: DataTypes.STRING
+  measureType: {
+    type: DataTypes.STRING,
   },
-  measure_value: {
-    type: DataTypes.NUMBER
+  measureValue: {
+    type: DataTypes.INTEGER,
   },
-  has_confirmed: {
+  hasConfirmed: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
-  image_url: {
-    type: DataTypes.STRING
+  imageUrl: {
+    type: DataTypes.STRING,
   },
-  customer_code: {
-    type: DataTypes.STRING
+  customerCode: {
+    type: DataTypes.STRING,
   }
 }, {
   sequelize: db,
-  modelName: 'Measure'
+  modelName: 'measure',
+  timestamps: false
 });
 
 export default Measure;

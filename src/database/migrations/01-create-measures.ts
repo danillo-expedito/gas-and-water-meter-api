@@ -4,27 +4,27 @@ import IMeasure from '../../interfaces/Measure/IMeasure';
 export default {
     up(queryInterface: QueryInterface): Promise<void> {
         return queryInterface.createTable<Model<IMeasure>>('measures', {
-            measure_uuid: {
+            measureUuid: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true
             },
-            measure_datetime: {
+            measureDatetime: {
                 type: DataTypes.DATE
             },
-            measure_type: {
+            measureType: {
                 type: DataTypes.STRING
             },
-            measure_value: {
-                type: DataTypes.NUMBER
+            measureValue: {
+                type: DataTypes.INTEGER
             },
-            has_confirmed: {
+            hasConfirmed: {
                 type: DataTypes.BOOLEAN
             },
-            image_url: {
+            imageUrl: {
                 type: DataTypes.STRING
             },
-            customer_code: {
+            customerCode: {
                 type: DataTypes.STRING
             },
         });
