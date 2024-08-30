@@ -15,12 +15,18 @@ export default {
             measure_type: {
                 type: DataTypes.STRING
             },
+            measure_value: {
+                type: DataTypes.NUMBER
+            },
             has_confirmed: {
                 type: DataTypes.BOOLEAN
             },
             image_url: {
                 type: DataTypes.STRING
-            }
+            },
+            customer_code: {
+                type: DataTypes.STRING
+            },
         });
     },
     down(queryInterface: QueryInterface): Promise<void> {

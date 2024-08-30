@@ -5,11 +5,11 @@ import SequelizeMeasure from '../database/models/SequelizeMeasure';
 export default class MeasureModel implements IMeasureModel {
   private model = SequelizeMeasure;
 
-  async findAll(filter?: 'WATER' | 'GAS'): Promise<IMeasure[]> {
-    const measures = await this.model.findAll();
+  async findAll(customer_code: string, filter?: 'WATER' | 'GAS'): Promise<IMeasure[]> {
+    const measures = await this.model.findAll({ where: { customer_code } });
 
     if (filter) {
-      return measures.filter((measure) => measure.measure_type === filter);
+      return measures.filter((measure) => measure.measure_type === filter.toUpperCase());
     }
     
     return measures.map((measure) => measure);

@@ -7,8 +7,8 @@ export default class MeasureService {
     private measureModel: MeasureModel = new MeasureModel()
   ) {}
   
-  public async findAll(filter?: 'WATER' | 'GAS'): Promise<ServiceResponse<IMeasure[]>> {
-    const measures = await this.measureModel.findAll(filter);
+  public async findAll(customer_code: string, filter?: 'WATER' | 'GAS'): Promise<ServiceResponse<IMeasure[]>> {
+    const measures = await this.measureModel.findAll(customer_code, filter);
     if (measures.length === 0) {
       return { status: 'ERROR', error_code: 'MEASURES_NOT_FOUND', error_description: "Nenhuma leitura encontrada" };
     }
@@ -30,7 +30,7 @@ export default class MeasureService {
     if (measureExists) {
       return { status: 'ERROR', error_code: 'DOUBLE_REPORT', error_description: "Leitura do mês já realizada" };
     }
-    
+
     const newMeasure = await this.measureModel.create(measure);
     return { data: newMeasure, status: 'SUCCESSFUL' };
   }

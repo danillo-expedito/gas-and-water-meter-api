@@ -18,6 +18,8 @@ class Measure extends Model<InferAttributes<Measure>, InferCreationAttributes<Me
   declare has_confirmed: boolean;
 
   declare image_url: string;
+
+  declare customer_code: string;
 }
 
 Measure.init({
@@ -40,6 +42,9 @@ Measure.init({
     defaultValue: false
   },
   image_url: {
+    type: DataTypes.STRING
+  },
+  customer_code: {
     type: DataTypes.STRING
   }
 }, {

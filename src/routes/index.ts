@@ -1,9 +1,8 @@
 import { Router } from "express";
+import measureRouter from './measure.routes';
 
 const router = Router();
 
-// router.use('/api', (req, res) => {
-//     res.json({ ok: true });
-// });
+router.use('/', measureRouter)
 
 export default router;

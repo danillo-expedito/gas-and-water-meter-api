@@ -5,4 +5,5 @@ export default interface IMeasure {
   measure_value: number;
   has_confirmed: boolean;
   image_url: string;
+  customer_code: string;
 }
