@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli",
-    "build": "copyfiles -u 1 src/**/*.json build/ && tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.json",
     "dev": "tsnd --watch \"./src/**\" --transpile-only ./src/server.ts",
     "prestart": "npm run build && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "start": "node ./build/server.js",
@@ -34,7 +34,6 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.3.0",
     "@typescript-eslint/parser": "^8.3.0",
-    "copyfiles": "^2.4.1",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",

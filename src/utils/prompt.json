@@ -1,4 +1,0 @@
-{
-  "prompt": "the image is in base64, the image is of a meter and you must take the measurement/value of consumption, be it water or gas. Return a string with only the value of the measurement"
-}
-  
