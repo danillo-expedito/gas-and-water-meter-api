@@ -57,6 +57,7 @@ export default class MeasureModel implements IMeasureModel {
     });
     
     if (!measure) return null;
+
     return measure;
   }
 }

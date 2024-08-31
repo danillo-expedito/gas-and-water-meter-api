@@ -12,7 +12,6 @@ function mapStatusHTTP(status, error_code) {
                 case 'DOUBLE_REPORT': return 409;
                 case 'INVALID_DATA': return 400;
                 case 'INVALID_TYPE': return 400;
-                // Outros casos de erro
                 default: return 500;
             }
         default: return 500;

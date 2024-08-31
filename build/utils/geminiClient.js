@@ -14,15 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const generative_ai_1 = require("@google/generative-ai");
 const dotenv_1 = __importDefault(require("dotenv"));
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 class GeminiClient {
     constructor() {
         var _a;
-        this.prompt = "the image is in base64, the image is \
-  of a meter and you must take the measurement/value of consumption,\
-  be it water or gas. Return a string with only the value of the measurement";
         this.genAI = new generative_ai_1.GoogleGenerativeAI((_a = process.env.GEMINI_API_KEY) !== null && _a !== void 0 ? _a : '');
         this.modelName = "gemini-1.5-flash";
+        this.prompt = this.loadPrompt();
+    }
+    loadPrompt() {
+        const filePath = path_1.default.resolve(__dirname, 'prompt.json');
+        const data = JSON.parse(fs_1.default.readFileSync(filePath, 'utf-8'));
+        return data.prompt;
     }
     base64ToGenerativePart(base64Data, mimeType) {
         return {

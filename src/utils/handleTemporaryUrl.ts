@@ -15,7 +15,7 @@ export default class TemporaryUrlHandler {
       if (!fs.existsSync(this.tempDir)) {
         fs.mkdirSync(this.tempDir, { recursive: true });
       }
-    }
+  }
 
   public createTemporaryUrl(base64Image: string, uuid: string): string {
     const buffer = Buffer.from(base64Image, 'base64');

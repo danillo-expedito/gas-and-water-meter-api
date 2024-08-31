@@ -20,6 +20,18 @@ export default [
     rules: {
       ...pluginJs.configs.recommended.rules,
       ...tsEslintPlugin.configs.recommended.rules,
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "*", next: "return" },
+        { blankLine: "always", prev: "*", next: "block-like" },
+        { blankLine: "always", prev: "block-like", next: "*" },
+        { blankLine: "always", prev: "*", next: "block" },
+        { blankLine: "always", prev: "block", next: "*" },
+        { blankLine: "always", prev: "*", next: "function" },
+        { blankLine: "always", prev: "function", next: "*" },
+        { blankLine: "always", prev: "*", next: "class" },
+        { blankLine: "always", prev: "class", next: "*"}
+      ],
     },
     ignores: [
       "build/**/*"
