@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli",
-    "build": "tsc --project tsconfig.json",
+    "build": "npm install && tsc --project tsconfig.json",
     "dev": "tsnd --watch \"./src/**\" --transpile-only ./src/server.ts",
     "prestart": "npm run build && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "start": "node ./build/server.js",
