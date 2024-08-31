@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
 
 dotenv.config();
 
@@ -13,14 +11,8 @@ export default class GeminiClient {
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
     this.modelName = "gemini-1.5-flash";
-    this.prompt = this.loadPrompt();
-  }
-
-  private loadPrompt(): string {
-    const filePath = path.resolve(__dirname, 'prompt.json');
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    
-    return data.prompt;
+    this.prompt = "the image is in base64, the image is of a meter and you must take \
+    the measurement/value of consumption, be it water or gas. Return a string with only the value of the measurement"
   }
 
   private base64ToGenerativePart(base64Data: string, mimeType: string) {
@@ -37,7 +29,7 @@ export default class GeminiClient {
     const imagePart = this.base64ToGenerativePart(base64Image, mimeType);
 
     const result = await model.generateContent([this.prompt, imagePart]);
-    const response = await result.response;
+    const response = result.response;
 
     console.log(response.text());
     
