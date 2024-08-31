@@ -34,10 +34,16 @@ To start the project, follow these steps:
    git clone <repository-url>
    cd <repository-directory>
 
-2. **Ensure Docker is Installed**: This project uses Docker for containerization. <br>
+2. **Create a `.env` File**:
+   You will need a GEMINI_API_KEY to use the Google Gemini API. Create a .env file in the root directory of the project with the following content:
+
+   ```bash
+   GEMINI_API_KEY=<your-gemini-api-key>
+
+3. **Ensure Docker is Installed**: This project uses Docker for containerization. <br>
 Please ensure Docker is installed and running on your machine.
 
-3. **Start the Project**:
+4. **Start the Project**:
    
    ```bash
    npm run compose:up
